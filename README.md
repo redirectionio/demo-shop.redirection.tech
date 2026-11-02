@@ -34,8 +34,8 @@ browser.
 
 ## Traffic
 
-So that the demos show a live site, `castor traffic:simulate` sends it the traffic of a small shop: about 300 people
-a day (from search engines, newsletters, social networks, AI assistants…, who browse, search, filter, and sometimes
+So that the demos show a live site, `castor traffic:simulate` sends it the traffic of a small shop: about 1,500 people a
+day (from search engines, newsletters, social networks, AI assistants…, who browse, search, filter, and sometimes
 order), search engine and AI crawlers, SEO tools, link previews, vulnerability scanners and an uptime monitor. Humans
 follow the hours of a French shop; bots crawl around the clock. The code lives in `traffic/src/`.
 

@@ -3,10 +3,13 @@
 namespace Traffic;
 
 /**
- * Who visits the shop, and how often: about 300 people a day, and the bots that crawl every site.
+ * Who visits the shop, and how often: about 1,500 people a day, and the bots that crawl every site.
  */
 final readonly class Population
 {
+    /** The visits per day below are those of a shop with 300 visitors a day: this one is bigger. */
+    private const float SCALE = 5;
+
     private const float HUMAN_VISITS_PER_DAY = 300;
     private const float SCANNER_VISITS_PER_DAY = 6;
 
@@ -25,15 +28,15 @@ final readonly class Population
     public function streams(): array
     {
         $streams = [
-            new Stream('human', self::HUMAN_VISITS_PER_DAY, Rhythm::Human, fn (int $number): \Generator => new HumanVisit(
+            new Stream('human', self::HUMAN_VISITS_PER_DAY * self::SCALE, Rhythm::Human, fn (int $number): \Generator => new HumanVisit(
                 $number, $this->browsers, $this->knownUrls, $this->userAgents, $this->journal, $this->random,
             )->run()),
-            new Stream('scanner', self::SCANNER_VISITS_PER_DAY, Rhythm::Constant, fn (int $number): \Generator => new ScannerVisit(
+            new Stream('scanner', self::SCANNER_VISITS_PER_DAY * self::SCALE, Rhythm::Constant, fn (int $number): \Generator => new ScannerVisit(
                 $number, $this->browsers, $this->journal, $this->random,
             )->run()),
         ];
         foreach ($this->crawlers() as $crawler) {
-            $streams[] = new Stream($crawler->name, $crawler->visitsPerDay, $crawler->rhythm, fn (int $number): \Generator => new CrawlerVisit(
+            $streams[] = new Stream($crawler->name, $crawler->visitsPerDay * self::SCALE, $crawler->rhythm, fn (int $number): \Generator => new CrawlerVisit(
                 $crawler, $number, $this->browsers, $this->knownUrls, $this->journal, $this->random,
             )->run());
         }
