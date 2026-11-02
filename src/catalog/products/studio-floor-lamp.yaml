@@ -1,0 +1,10 @@
+category: floor-lamps
+name: { fr: Lampadaire Studio, en: Studio floor lamp }
+description:
+  fr: Un lampadaire en métal noir mat, avec une tête en dôme orientable. Sobre et efficace, il éclaire un fauteuil ou un coin bureau.
+  en: A matt black metal floor lamp with an adjustable dome head. Simple and effective, it lights up an armchair or a desk corner.
+priceInCents: 11900
+colors: [black]
+materials: [metal]
+dimensionsInCm: { width: 35, depth: 35, height: 165 }
+photos: [../photos/floor-lamps-2.jpg]

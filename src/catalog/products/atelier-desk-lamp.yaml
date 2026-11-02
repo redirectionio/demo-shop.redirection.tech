@@ -1,0 +1,11 @@
+category: table-lamps
+name: { fr: Lampe de bureau Atelier, en: Atelier desk lamp }
+description:
+  fr: Une lampe de bureau en métal noir et laiton, avec un bras orientable à contrepoids et un abat-jour en dôme. La lumière va exactement où on en a besoin.
+  en: A black metal and brass desk lamp, with a counterweighted adjustable arm and a dome shade. It puts the light exactly where you need it.
+priceInCents: 12900
+colors: [black, gold]
+materials: [brass, metal]
+dimensionsInCm: { width: 60, depth: 18, height: 48 }
+photos: [../photos/table-lamps-1.jpg]
+featured: true

@@ -1,0 +1,10 @@
+category: rugs
+name: { fr: Tapis Médina, en: Medina rug }
+description:
+  fr: Un tapis en laine à poils ras, au motif treillis gris et crème inspiré des tapis marocains. Il réchauffe un salon aux tons neutres.
+  en: A low-pile wool rug with a grey and cream trellis pattern inspired by Moroccan rugs. It warms up a living room with neutral tones.
+priceInCents: 39900
+colors: [grey, white]
+materials: [wool]
+dimensionsInCm: { width: 230, depth: 160, height: 2 }
+photos: [../photos/rugs-2.jpg]

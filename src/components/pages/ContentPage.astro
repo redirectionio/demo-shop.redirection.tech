@@ -1,0 +1,23 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import type { RouteOf } from '../../lib/routing';
+import Breadcrumb from '../Breadcrumb.astro';
+
+type Props = { route: RouteOf<'content-page'> };
+
+const { route } = Astro.props;
+const { locale, page } = route;
+const entry = page.entries[locale];
+const { Content } = await render(entry);
+---
+
+<Layout locale={locale} title={entry.data.title} description={entry.data.description} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <div class="container-page pt-8">
+        <Breadcrumb locale={locale} links={[]} current={entry.data.title} />
+        <h1 class="mt-6 text-4xl">{entry.data.title}</h1>
+        <div class="prose-page mt-8">
+            <Content />
+        </div>
+    </div>
+</Layout>

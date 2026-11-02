@@ -1,0 +1,10 @@
+category: pendant-lights
+name: { fr: Suspension grappe Bulles, en: Bubbles cluster pendant }
+description:
+  fr: Une grappe de globes en verre transparent, suspendus à différentes hauteurs par de fins câbles. Parfaite au-dessus d'une table de salle à manger.
+  en: A cluster of clear glass globes hung at different heights on slim cords. Perfect above a dining table.
+priceInCents: 34900
+colors: [grey]
+materials: [glass, metal]
+dimensionsInCm: { width: 60, depth: 60, height: 120 }
+photos: [../photos/pendant-lights-2.jpg]

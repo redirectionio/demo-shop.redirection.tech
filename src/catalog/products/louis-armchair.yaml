@@ -1,0 +1,10 @@
+category: armchairs
+name: { fr: Fauteuil Louis, en: Louis armchair }
+description:
+  fr: Un fauteuil de style Louis XV en cuir gris étain capitonné, avec un cadre en bois sculpté et des pieds galbés. Le classique français, pour une entrée ou une chambre.
+  en: A Louis XV-style armchair in button-tufted pewter grey leather, with a carved wooden frame and curved legs. A French classic for a hallway or a bedroom.
+priceInCents: 119000
+colors: [brown, grey]
+materials: [leather, wood]
+dimensionsInCm: { width: 72, depth: 70, height: 106 }
+photos: [../photos/armchairs-2.jpg]

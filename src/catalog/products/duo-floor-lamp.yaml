@@ -1,0 +1,10 @@
+category: floor-lamps
+name: { fr: Lampadaire liseuse Duo, en: Duo floor lamp with reading light }
+description:
+  fr: Un lampadaire à vasque blanche qui éclaire le plafond, complété d'une liseuse orientable. Deux lumières sur un même pied, l'une pour la pièce, l'autre pour la lecture.
+  en: A white uplighter floor lamp with an adjustable reading arm. Two lights on one stand, one for the room and one for reading.
+priceInCents: 8900
+colors: [black, white]
+materials: [metal]
+dimensionsInCm: { width: 30, depth: 30, height: 180 }
+photos: [../photos/floor-lamps-3.jpg]

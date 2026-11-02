@@ -1,0 +1,10 @@
+category: mirrors
+name: { fr: Miroir baroque Versailles, en: Versailles baroque mirror }
+description:
+  fr: Un miroir au cadre doré sculpté de volutes et de personnages, avec une glace vieillie veinée d'or. Une pièce d'exception pour une cheminée ou un mur d'entrée.
+  en: A mirror with a gilded frame carved with scrolls and figures, and an antiqued glass veined with gold. A showpiece for a mantelpiece or an entrance wall.
+priceInCents: 49000
+colors: [gold]
+materials: [glass, wood]
+dimensionsInCm: { width: 60, depth: 8, height: 95 }
+photos: [../photos/mirrors-2.jpg]

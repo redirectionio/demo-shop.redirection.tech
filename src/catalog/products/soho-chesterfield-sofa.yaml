@@ -1,0 +1,11 @@
+category: sofas
+name: { fr: Canapé Chesterfield Soho, en: Soho Chesterfield sofa }
+description:
+  fr: La silhouette du chesterfield revisitée, en cuir noir au capitonnage profond et moelleux. Une pièce forte pour un salon au caractère affirmé.
+  en: The Chesterfield silhouette reimagined in black leather with deep, plump quilting. A statement piece for a living room with character.
+priceInCents: 239000
+colors: [black]
+materials: [leather, wood]
+dimensionsInCm: { width: 232, depth: 98, height: 72 }
+photos: [../photos/sofas-4.jpg]
+status: out-of-stock

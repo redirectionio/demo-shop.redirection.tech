@@ -1,0 +1,50 @@
+name: Deploy
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+env:
+    ASTRO_TELEMETRY_DISABLED: 1
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: 24
+                  cache: npm
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  tools: castor
+            - run: castor site:check
+            - run: castor site:build
+            - uses: actions/upload-pages-artifact@v5
+              with:
+                  path: dist
+
+    deploy:
+        if: github.event_name != 'pull_request'
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            pages: write
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - id: deployment
+              uses: actions/deploy-pages@v5

@@ -1,0 +1,11 @@
+category: sofas
+name: { fr: Canapé Milano, en: Milano sofa }
+description:
+  fr: Un canapé aux lignes droites en cuir blanc pleine fleur, avec des accoudoirs larges et une assise profonde. Il apporte une touche graphique aux intérieurs clairs.
+  en: A clean-lined sofa in white full-grain leather, with wide arms and a deep seat. It brings a graphic touch to bright interiors.
+priceInCents: 189000
+previousPriceInCents: 219000
+colors: [white]
+materials: [leather, wood]
+dimensionsInCm: { width: 204, depth: 96, height: 78 }
+photos: [../photos/sofas-2.jpg]

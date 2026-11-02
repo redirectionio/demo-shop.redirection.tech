@@ -1,0 +1,9 @@
+category: vases
+name: { fr: Soliflore Goutte, en: Drop bud vase }
+description:
+  fr: Un soliflore en forme de goutte, en céramique blanche striée. Il accueille une tige ou un petit bouquet sur une table de salle à manger.
+  en: A teardrop-shaped bud vase in ribbed white ceramic. It holds a single stem or a small posy on a dining table.
+priceInCents: 2400
+colors: [white]
+materials: [ceramic]
+photos: [../photos/vases-2.jpg]

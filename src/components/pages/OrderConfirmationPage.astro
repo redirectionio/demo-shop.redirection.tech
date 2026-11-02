@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, homeUrl } from '../../lib/routing';
+
+type Props = { route: RouteOf<'system-page'> };
+
+const { route } = Astro.props;
+const { locale } = route;
+const t = translate(locale);
+---
+
+<Layout locale={locale} title={t.orderConfirmation.title} description={t.orderConfirmation.title} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <div class="container-page max-w-2xl pt-20 text-center">
+        <h1 class="text-4xl">{t.orderConfirmation.title}</h1>
+        <p data-order-text class="mt-6"></p>
+        <p class="mt-4 text-sm text-muted">{t.orderConfirmation.notice}</p>
+        <a href={homeUrl(locale)} class="button-primary mt-10">{t.orderConfirmation.backHome}</a>
+    </div>
+</Layout>
+
+<script>
+    import { type Locale, translate } from '../../lib/i18n';
+
+    const orderNumber = new URLSearchParams(window.location.search).get('order');
+    if (orderNumber !== null) {
+        document.querySelector('[data-order-text]')!.textContent = translate(document.documentElement.lang as Locale).orderConfirmation.text(orderNumber);
+    }
+</script>

@@ -1,0 +1,9 @@
+category: candles
+name: { fr: Trio de bougies Veillée, en: Fireside candle trio }
+description:
+  fr: Trois bougies pilier rouge bordeaux de hauteurs différentes, à regrouper sur un plateau ou une table de fête.
+  en: Three burgundy pillar candles in different heights, to group on a tray or a festive table.
+priceInCents: 2400
+colors: [red]
+materials: [wax]
+photos: [../photos/candles-2.jpg]

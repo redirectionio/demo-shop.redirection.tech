@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { locales, translate } from '../lib/i18n';
+import { homeUrl } from '../lib/routing';
+
+// GitHub Pages serves this single page for every unknown URL, whatever the locale:
+// the English version is swapped in by the script below.
+const locale = 'fr';
+---
+
+<Layout locale={locale} title={translate(locale).notFound.title} description={translate(locale).notFound.text} alternateUrls={null} indexable={false}>
+    {
+        locales.map((messagesLocale) => (
+            <div data-not-found={messagesLocale} hidden={messagesLocale !== locale} lang={messagesLocale} class="container-page max-w-2xl pt-24 text-center">
+                <p class="font-serif text-8xl text-accent">404</p>
+                <h1 class="mt-6 text-4xl">{translate(messagesLocale).notFound.title}</h1>
+                <p class="mt-4 text-muted">{translate(messagesLocale).notFound.text}</p>
+                <a href={homeUrl(messagesLocale)} class="button-primary mt-10">
+                    {translate(messagesLocale).notFound.backHome}
+                </a>
+            </div>
+        ))
+    }
+</Layout>
+
+<script>
+    import { translate } from '../lib/i18n';
+
+    if (window.location.pathname.startsWith('/en/')) {
+        for (const block of document.querySelectorAll<HTMLElement>('[data-not-found]')) {
+            block.hidden = block.dataset.notFound !== 'en';
+        }
+        document.title = document.title.replace(translate('fr').notFound.title, translate('en').notFound.title);
+    }
+</script>

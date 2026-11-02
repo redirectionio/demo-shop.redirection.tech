@@ -1,0 +1,9 @@
+category: cushions
+name: { fr: Duo de coussins Contraste, en: Contrast cushion pair }
+description:
+  fr: Deux coussins assortis, l'un en velours bleu, l'autre en coton tissé à damier noir et blanc. Un duo graphique pour réveiller un canapé neutre.
+  en: Two matching cushions, one in blue velvet, the other in black and white check woven cotton. A graphic pair to liven up a neutral sofa.
+priceInCents: 5900
+colors: [black, blue, white]
+materials: [cotton, velvet]
+photos: [../photos/cushions-4.jpg]

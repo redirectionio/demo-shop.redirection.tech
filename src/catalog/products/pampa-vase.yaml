@@ -1,0 +1,10 @@
+category: vases
+name: { fr: Vase Pampa, en: Pampa vase }
+description:
+  fr: Un vase en céramique rose poudré à côtes fines, au col étroit. Il met en valeur un bouquet de fleurs séchées ou quelques brins de pampa.
+  en: A powder pink ceramic vase with fine ribs and a narrow neck. It shows off a bunch of dried flowers or a few stems of pampas grass.
+priceInCents: 3900
+colors: [pink]
+materials: [ceramic]
+photos: [../photos/vases-1.jpg]
+featured: true

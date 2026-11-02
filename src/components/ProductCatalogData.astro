@@ -1,0 +1,24 @@
+---
+import { getImage } from 'astro:assets';
+import { loadCatalog } from '../lib/catalog';
+import type { Locale } from '../lib/i18n';
+import { productUrl } from '../lib/routing';
+import type { ClientProduct } from '../scripts/product-catalog';
+
+type Props = { locale: Locale };
+
+const { locale } = Astro.props;
+const products: ClientProduct[] = await Promise.all(
+    (await loadCatalog()).listedProducts().map(async (product) => ({
+        id: product.id,
+        name: product.name[locale],
+        url: productUrl(product, locale),
+        priceInCents: product.priceInCents,
+        photoUrl: (await getImage({ src: product.photos[0], width: 240 })).src,
+        purchasable: product.isPurchasable(),
+    })),
+);
+---
+
+<!-- "<" is escaped so that no product name can close the script element. -->
+<script is:inline type="application/json" id="product-catalog" set:html={JSON.stringify(products).replaceAll('<', '\\u003c')}></script>

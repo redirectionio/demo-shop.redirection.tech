@@ -1,0 +1,10 @@
+category: table-lamps
+name: { fr: Lampe Hortense, en: Hortense table lamp }
+description:
+  fr: Une lampe de tradition, avec un pied en laiton tourné et un abat-jour évasé en lin crème. Vendue à l'unité, elle s'installe volontiers par paire sur une commode.
+  en: A traditional lamp with a turned brass base and a flared cream linen shade. Sold individually, it looks just as good in pairs on a chest of drawers.
+priceInCents: 13900
+colors: [beige, gold]
+materials: [brass, linen]
+dimensionsInCm: { width: 35, depth: 35, height: 62 }
+photos: [../photos/table-lamps-3.jpg]

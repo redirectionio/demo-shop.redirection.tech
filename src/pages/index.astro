@@ -1,0 +1,39 @@
+---
+import { Font } from 'astro:assets';
+import { locales, translate } from '../lib/i18n';
+import { homeUrl } from '../lib/routing';
+import { brandName } from '../lib/site';
+import '../styles/global.css';
+
+// Visitors land here when nothing redirects them to their language.
+---
+
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{brandName}</title>
+        <meta name="description" content={translate('fr').brand.tagline} />
+        {locales.map((locale) => <link rel="alternate" hreflang={locale} href={new URL(homeUrl(locale), Astro.site)} />)}
+        <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <Font cssVariable="--font-fraunces" preload />
+        <Font cssVariable="--font-inter" preload />
+    </head>
+    <body class="flex min-h-screen flex-col items-center justify-center gap-10 p-8 text-center">
+        <p class="font-serif text-5xl">{brandName}</p>
+        <ul class="flex flex-col gap-6 sm:flex-row">
+            {
+                locales.map((locale) => (
+                    <li lang={locale}>
+                        <p class="text-sm text-muted">{translate(locale).languageChooser.title}</p>
+                        <a href={homeUrl(locale)} class="button-primary mt-3 min-w-48">
+                            {translate(locale).localeName}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </body>
+</html>

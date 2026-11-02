@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, homeUrl, systemPageUrl } from '../../lib/routing';
+import ProductCatalogData from '../ProductCatalogData.astro';
+
+type Props = { route: RouteOf<'system-page'> };
+
+const { route } = Astro.props;
+const { locale } = route;
+const t = translate(locale);
+---
+
+<Layout locale={locale} title={t.cart.title} description={t.cart.title} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <div class="container-page pt-12">
+        <h1 class="text-4xl">{t.cart.title}</h1>
+
+        <div data-cart-empty hidden class="py-16 text-center">
+            <p class="text-muted">{t.cart.empty}</p>
+            <a href={homeUrl(locale)} class="button-secondary mt-6">{t.cart.continueShopping}</a>
+        </div>
+
+        <div data-cart-content hidden class="mt-8 grid gap-12 lg:grid-cols-3">
+            <ul data-cart-lines class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-2"></ul>
+            <aside class="h-fit rounded-lg bg-sand p-6 text-sm">
+                <dl class="space-y-3">
+                    <div class="flex justify-between"><dt>{t.cart.subtotal}</dt><dd data-cart-subtotal></dd></div>
+                    <div class="flex justify-between"><dt>{t.cart.shipping}</dt><dd data-cart-shipping></dd></div>
+                    <div class="flex justify-between border-t border-ink/10 pt-3 text-base font-semibold"><dt>{t.cart.total}</dt><dd data-cart-total></dd></div>
+                </dl>
+                <a href={systemPageUrl('checkout', locale)} class="button-primary mt-6 w-full">{t.cart.checkout}</a>
+            </aside>
+        </div>
+
+        <template data-cart-line>
+            <li class="flex gap-4 py-6">
+                <img data-line-photo alt="" width="96" height="96" class="size-24 rounded-md bg-sand object-cover" />
+                <div class="flex flex-1 flex-col gap-2">
+                    <a data-line-name class="font-medium hover:underline"></a>
+                    <p data-line-unit-price class="text-sm text-muted"></p>
+                    <div class="mt-auto flex items-center gap-4 text-sm">
+                        <input data-line-quantity type="number" min="1" max="99" aria-label={t.product.quantity} class="input-field w-20 py-1.5" />
+                        <button data-line-remove type="button" class="text-muted underline hover:text-ink">{t.cart.remove}</button>
+                    </div>
+                </div>
+                <p data-line-total class="font-medium"></p>
+            </li>
+        </template>
+    </div>
+    <ProductCatalogData locale={locale} />
+</Layout>
+
+<script>
+    import { changeQuantity, onCartChange, removeFromCart } from '../../scripts/cart';
+    import { summarizeCart } from '../../scripts/cart-summary';
+    import { type Locale, formatPrice, translate } from '../../lib/i18n';
+    import { readProductCatalog } from '../../scripts/product-catalog';
+
+    const locale = document.documentElement.lang as Locale;
+    const t = translate(locale);
+    const products = readProductCatalog();
+    const lineTemplate = document.querySelector<HTMLTemplateElement>('[data-cart-line]')!;
+
+    function render(): void {
+        const summary = summarizeCart(products);
+        document.querySelector<HTMLElement>('[data-cart-empty]')!.hidden = summary.lines.length > 0;
+        document.querySelector<HTMLElement>('[data-cart-content]')!.hidden = summary.lines.length === 0;
+
+        document.querySelector('[data-cart-lines]')!.replaceChildren(
+            ...summary.lines.map(({ product, quantity, totalInCents }) => {
+                const line = lineTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement;
+                line.querySelector<HTMLImageElement>('[data-line-photo]')!.src = product.photoUrl;
+                const name = line.querySelector<HTMLAnchorElement>('[data-line-name]')!;
+                name.href = product.url;
+                name.textContent = product.name;
+                line.querySelector('[data-line-unit-price]')!.textContent = formatPrice(product.priceInCents, locale);
+                line.querySelector('[data-line-total]')!.textContent = formatPrice(totalInCents, locale);
+                const quantityInput = line.querySelector<HTMLInputElement>('[data-line-quantity]')!;
+                quantityInput.value = String(quantity);
+                quantityInput.addEventListener('change', () => changeQuantity(product.id, Math.max(0, Math.round(Number(quantityInput.value)))));
+                line.querySelector('[data-line-remove]')!.addEventListener('click', () => removeFromCart(product.id));
+
+                return line;
+            }),
+        );
+
+        document.querySelector('[data-cart-subtotal]')!.textContent = formatPrice(summary.subtotalInCents, locale);
+        document.querySelector('[data-cart-shipping]')!.textContent =
+            summary.shippingInCents === 0 ? t.cart.shippingFree : formatPrice(summary.shippingInCents, locale);
+        document.querySelector('[data-cart-total]')!.textContent = formatPrice(summary.totalInCents, locale);
+    }
+
+    render();
+    onCartChange(render);
+</script>

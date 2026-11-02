@@ -1,0 +1,10 @@
+category: mirrors
+name: { fr: Miroir soleil Solstice, en: Solstice sunburst mirror }
+description:
+  fr: Un miroir soleil aux rayons en métal argenté, inspiré des intérieurs des années 50. Il apporte de la lumière à une salle à manger.
+  en: A sunburst mirror with silver metal rays, inspired by 1950s interiors. It brings light into a dining room.
+priceInCents: 16900
+colors: [grey]
+materials: [glass, metal]
+dimensionsInCm: { width: 90, depth: 4, height: 90 }
+photos: [../photos/mirrors-3.jpg]

@@ -1,0 +1,10 @@
+category: rugs
+name: { fr: Tapis Marée, en: Tide rug }
+description:
+  fr: Un tapis en coton tissé à plat, teint en dégradé du naturel au bleu marine. Son effet tie and dye structure un salon sans l'alourdir.
+  en: A flat-woven cotton rug, dip-dyed from natural to navy. Its ombré effect anchors a living room without weighing it down.
+priceInCents: 29900
+colors: [beige, blue]
+materials: [cotton]
+dimensionsInCm: { width: 240, depth: 170, height: 1 }
+photos: [../photos/rugs-1.jpg]

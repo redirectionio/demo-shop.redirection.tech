@@ -1,0 +1,11 @@
+category: sofas
+name: { fr: Canapé 3 places Oslo, en: Oslo 3-seater sofa }
+description:
+  fr: Un grand trois places au dossier capitonné, habillé d'un tissu gris chiné et posé sur des pieds en bois foncé. Assise ferme et accoudoirs généreux, pour les longues soirées en famille.
+  en: A roomy three-seater with a button-tufted back, upholstered in a heathered grey fabric and set on dark wooden legs. Firm seat and generous arms, made for long family evenings.
+priceInCents: 129000
+colors: [grey]
+materials: [cotton, wood]
+dimensionsInCm: { width: 220, depth: 92, height: 86 }
+photos: [../photos/sofas-1.jpg]
+featured: true

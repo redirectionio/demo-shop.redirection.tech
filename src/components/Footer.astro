@@ -1,0 +1,71 @@
+---
+import { loadCatalog } from '../lib/catalog';
+import { type Locale, translate } from '../lib/i18n';
+import { contentPageUrl } from '../lib/routing';
+import { brandName } from '../lib/site';
+
+type Props = {
+    locale: Locale;
+};
+
+const { locale } = Astro.props;
+const t = translate(locale);
+const catalog = await loadCatalog();
+const columns = [
+    { title: t.footer.about, pages: ['about', 'contact'].map((id) => catalog.contentPage(id)) },
+    { title: t.footer.help, pages: ['delivery-returns', 'terms-of-sale', 'legal-notice'].map((id) => catalog.contentPage(id)) },
+];
+---
+
+<footer class="mt-24 bg-sand">
+    <div class="border-b border-ink/10">
+        <ul class="container-page grid grid-cols-2 gap-6 py-8 text-sm lg:grid-cols-4">
+            <li>{t.reassurance.delivery}</li>
+            <li>{t.reassurance.returns}</li>
+            <li>{t.reassurance.payment}</li>
+            <li>{t.reassurance.support}</li>
+        </ul>
+    </div>
+    <div class="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
+        <div>
+            <p class="font-serif text-2xl">{brandName}</p>
+            <p class="mt-3 text-sm text-muted">{t.brand.tagline}</p>
+        </div>
+        {
+            columns.map((column) => (
+                <div>
+                    <p class="text-sm font-semibold">{column.title}</p>
+                    <ul class="mt-3 space-y-2 text-sm text-muted">
+                        {column.pages.map((page) => (
+                            <li>
+                                <a class="hover:text-ink" href={contentPageUrl(page, locale)}>
+                                    {page.title(locale)}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))
+        }
+        <form data-newsletter class="text-sm">
+            <p class="font-semibold">{t.footer.newsletterTitle}</p>
+            <p class="mt-3 text-muted">{t.footer.newsletterText}</p>
+            <div class="mt-4 flex gap-2">
+                <input type="email" required placeholder={t.footer.newsletterPlaceholder} class="input-field" />
+                <button class="button-primary px-4 py-2">{t.footer.newsletterSubmit}</button>
+            </div>
+            <p data-newsletter-thanks hidden class="mt-3 text-accent">{t.footer.newsletterThanks}</p>
+        </form>
+    </div>
+    <p class="container-page pb-8 text-xs text-muted">{t.footer.copyright(new Date().getFullYear())}</p>
+</footer>
+
+<script>
+    for (const form of document.querySelectorAll<HTMLFormElement>('[data-newsletter]')) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            form.reset();
+            form.querySelector<HTMLElement>('[data-newsletter-thanks]')!.hidden = false;
+        });
+    }
+</script>

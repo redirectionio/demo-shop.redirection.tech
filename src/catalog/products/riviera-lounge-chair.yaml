@@ -1,0 +1,10 @@
+category: armchairs
+name: { fr: Fauteuil Riviera, en: Riviera lounge chair }
+description:
+  fr: Un fauteuil rond en cordage blanc tressé sur une structure en métal noir. Il se plaît aussi bien dans un salon lumineux que sur une terrasse couverte.
+  en: A round lounge chair in white woven cord on a black metal frame. It is just as happy in a bright living room as on a covered terrace.
+priceInCents: 27900
+colors: [black, white]
+materials: [metal, polyester]
+dimensionsInCm: { width: 74, depth: 70, height: 86 }
+photos: [../photos/armchairs-4.jpg]

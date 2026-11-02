@@ -1,0 +1,9 @@
+category: cushions
+name: { fr: Coussin Cactus, en: Cactus cushion }
+description:
+  fr: Une housse en coton crème imprimée de cactus en pot, livrée avec son garnissage. Une touche de fantaisie pour un canapé ou un lit.
+  en: A cream cotton cover printed with potted cacti, filling included. A playful touch for a sofa or a bed.
+priceInCents: 2900
+colors: [beige, green]
+materials: [cotton]
+photos: [../photos/cushions-1.jpg]

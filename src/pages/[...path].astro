@@ -1,0 +1,31 @@
+---
+import CartPage from '../components/pages/CartPage.astro';
+import CategoryPage from '../components/pages/CategoryPage.astro';
+import CheckoutPage from '../components/pages/CheckoutPage.astro';
+import ContentPage from '../components/pages/ContentPage.astro';
+import HomePage from '../components/pages/HomePage.astro';
+import OrderConfirmationPage from '../components/pages/OrderConfirmationPage.astro';
+import ProductPage from '../components/pages/ProductPage.astro';
+import SearchPage from '../components/pages/SearchPage.astro';
+import { type Route, loadRoutes } from '../lib/routing';
+
+export async function getStaticPaths() {
+    return (await loadRoutes()).map((route) => ({
+        params: { path: route.url.replace(/^\/|\/$/g, '') },
+        props: { route },
+    }));
+}
+
+type Props = { route: Route };
+
+const { route } = Astro.props;
+---
+
+{route.kind === 'home' && <HomePage route={route} />}
+{route.kind === 'category' && <CategoryPage route={route} />}
+{route.kind === 'product' && <ProductPage route={route} />}
+{route.kind === 'content-page' && <ContentPage route={route} />}
+{route.kind === 'system-page' && route.page === 'cart' && <CartPage route={route} />}
+{route.kind === 'system-page' && route.page === 'checkout' && <CheckoutPage route={route} />}
+{route.kind === 'system-page' && route.page === 'order-confirmation' && <OrderConfirmationPage route={route} />}
+{route.kind === 'system-page' && route.page === 'search' && <SearchPage route={route} />}

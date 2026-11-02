@@ -1,0 +1,10 @@
+category: floor-lamps
+name: { fr: Lampadaire Origami, en: Origami floor lamp }
+description:
+  fr: Une colonne de papier plissé blanc sur un fin piètement en métal. Sa lumière diffuse, comme filtrée par un paravent, apaise une chambre ou un salon.
+  en: A column of white pleated paper on a slim metal stand. Its diffused light, as if filtered through a paper screen, soothes a bedroom or a living room.
+priceInCents: 16900
+colors: [white]
+materials: [metal, paper]
+dimensionsInCm: { width: 30, depth: 30, height: 150 }
+photos: [../photos/floor-lamps-1.jpg]

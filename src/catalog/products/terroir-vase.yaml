@@ -1,0 +1,10 @@
+category: vases
+name: { fr: Vase Terroir, en: Terroir vase }
+description:
+  fr: Un vase en grès brut aux bandes en relief, dans des tons beige et gris. Façonné à la main, chaque exemplaire est légèrement différent.
+  en: A raw stoneware vase with relief bands, in beige and grey tones. Hand-thrown, so no two are quite the same.
+priceInCents: 5900
+previousPriceInCents: 7400
+colors: [beige, grey]
+materials: [stoneware]
+photos: [../photos/vases-4.jpg]

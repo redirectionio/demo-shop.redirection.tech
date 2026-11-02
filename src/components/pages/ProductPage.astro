@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { loadCatalog } from '../../lib/catalog';
+import { colors, materials } from '../../lib/facets';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, categoryUrl } from '../../lib/routing';
+import Breadcrumb from '../Breadcrumb.astro';
+import Price from '../Price.astro';
+import ProductGrid from '../ProductGrid.astro';
+
+type Props = { route: RouteOf<'product'> };
+
+const { route } = Astro.props;
+const { locale, product } = route;
+const t = translate(locale);
+const name = product.name[locale];
+const relatedProducts = (await loadCatalog()).relatedProducts(product, 4);
+const dimensions = product.dimensionsInCm;
+---
+
+<Layout locale={locale} title={name} description={product.description[locale]} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <div class="container-page pt-8">
+        <Breadcrumb
+            locale={locale}
+            links={product.category.lineage().map((category) => ({ label: category.name[locale], url: categoryUrl(category, locale) }))}
+            current={name}
+        />
+
+        <article class="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16" data-pagefind-body>
+            <div>
+                <div class="overflow-hidden rounded-lg bg-sand">
+                    <Image
+                        src={product.photos[0]}
+                        alt={name}
+                        widths={[600, 900, 1200]}
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        class="aspect-4/5 w-full object-cover"
+                        loading="eager"
+                        fetchpriority="high"
+                        data-product-photo
+                        data-pagefind-meta="image[src], image_alt[alt]"
+                    />
+                </div>
+                {
+                    product.photos.length > 1 && (
+                        <ul class="mt-4 grid grid-cols-5 gap-3">
+                            {product.photos.map((photo, index) => (
+                                <li>
+                                    <button type="button" class="block overflow-hidden rounded-md bg-sand" data-photo-thumbnail={index}>
+                                        <Image src={photo} alt={`${name} (${index + 1})`} width={160} class="aspect-square w-full object-cover" />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
+                <template data-product-photos data-pagefind-ignore>
+                    {product.photos.map((photo) => <Image src={photo} alt={name} widths={[600, 900, 1200]} sizes="(min-width: 1024px) 50vw, 100vw" class="aspect-4/5 w-full object-cover" />)}
+                </template>
+            </div>
+
+            <div class="lg:pt-6">
+                <h1 class="text-4xl">{name}</h1>
+                <Price product={product} locale={locale} class="mt-4 text-xl" />
+                <p data-pagefind-meta="price" hidden>{product.priceInCents}</p>
+                <p class="mt-6 leading-relaxed text-muted">{product.description[locale]}</p>
+
+                <p class="mt-6 flex items-center gap-2 text-sm">
+                    <span class:list={['size-2 rounded-full', product.isPurchasable() ? 'bg-green-600' : 'bg-red-600']}></span>
+                    {product.isPurchasable() ? t.product.inStock : t.product.outOfStock}
+                </p>
+
+                <form class="mt-6 flex gap-3" data-add-to-cart={product.id} data-pagefind-ignore>
+                    <label>
+                        <span class="sr-only">{t.product.quantity}</span>
+                        <select name="quantity" class="h-full rounded-full border border-ink/20 bg-transparent px-4" disabled={!product.isPurchasable()}>
+                            {Array.from({ length: 10 }, (_, index) => <option value={index + 1}>{index + 1}</option>)}
+                        </select>
+                    </label>
+                    <button class="button-primary flex-1" disabled={!product.isPurchasable()}>{t.product.addToCart}</button>
+                </form>
+                <p data-added-to-cart hidden class="mt-3 text-sm text-accent">{t.product.added}</p>
+
+                <h2 class="mt-12 text-xl">{t.product.characteristics}</h2>
+                <dl class="mt-4 divide-y divide-ink/10 border-y border-ink/10 text-sm">
+                    {
+                        dimensions !== null && (
+                            <div class="flex justify-between py-3">
+                                <dt class="text-muted">{t.product.dimensions}</dt>
+                                <dd>{t.product.dimensionsValue(dimensions.width, dimensions.depth, dimensions.height)}</dd>
+                            </div>
+                        )
+                    }
+                    <div class="flex justify-between py-3">
+                        <dt class="text-muted">{t.product.materials}</dt>
+                        <dd>{product.materials.map((id) => materials[id][locale]).join(', ')}</dd>
+                    </div>
+                    <div class="flex justify-between py-3">
+                        <dt class="text-muted">{t.product.colors}</dt>
+                        <dd class="flex items-center gap-2">
+                            {product.colors.map((id) => <span class="size-4 rounded-full border border-ink/20" style={`background: ${colors[id].hex}`} title={colors[id].name[locale]}></span>)}
+                            {product.colors.map((id) => colors[id].name[locale]).join(', ')}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </article>
+
+        {
+            relatedProducts.length > 0 && (
+                <section class="mt-24">
+                    <h2 class="text-3xl">{t.product.related}</h2>
+                    <ProductGrid products={relatedProducts} locale={locale} class="mt-8" />
+                </section>
+            )
+        }
+    </div>
+</Layout>
+
+<script>
+    import { addToCart } from '../../scripts/cart';
+
+    const form = document.querySelector<HTMLFormElement>('[data-add-to-cart]')!;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        addToCart(form.dataset.addToCart!, Number(new FormData(form).get('quantity')));
+        document.querySelector<HTMLElement>('[data-added-to-cart]')!.hidden = false;
+    });
+
+    const photos = document.querySelector<HTMLTemplateElement>('[data-product-photos]')!.content.children;
+    for (const thumbnail of document.querySelectorAll<HTMLButtonElement>('[data-photo-thumbnail]')) {
+        thumbnail.addEventListener('click', () => {
+            const photo = photos[Number(thumbnail.dataset.photoThumbnail)].cloneNode(true) as HTMLElement;
+            photo.setAttribute('data-product-photo', '');
+            document.querySelector('[data-product-photo]')!.replaceWith(photo);
+        });
+    }
+</script>

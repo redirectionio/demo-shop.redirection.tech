@@ -1,0 +1,10 @@
+category: coffee-tables
+name: { fr: Table basse Monaco, en: Monaco coffee table }
+description:
+  fr: Un plateau carré laqué blanc brillant sur un piètement chromé. Une table basse épurée qui reflète la lumière.
+  en: A square high-gloss white lacquered top on a chrome base. A sleek coffee table that bounces the light around.
+priceInCents: 44900
+colors: [grey, white]
+materials: [metal, wood]
+dimensionsInCm: { width: 90, depth: 90, height: 38 }
+photos: [../photos/coffee-tables-2.jpg]

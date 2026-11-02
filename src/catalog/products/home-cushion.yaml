@@ -1,0 +1,10 @@
+category: cushions
+name: { fr: Coussin Home, en: Home cushion }
+description:
+  fr: Un coussin gris chiné brodé du mot HOME en lettres blanches. Simple et chaleureux, il trouve sa place sur un canapé clair.
+  en: A heathered grey cushion embroidered with the word HOME in white letters. Simple and warm, it suits a light-coloured sofa.
+priceInCents: 2400
+previousPriceInCents: 2900
+colors: [grey, white]
+materials: [cotton]
+photos: [../photos/cushions-3.jpg]

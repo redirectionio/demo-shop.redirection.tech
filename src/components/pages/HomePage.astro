@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import heroPhoto from '../../catalog/photos/home-hero.jpg';
+import storyPhoto from '../../catalog/photos/home-story.jpg';
+import Layout from '../../layouts/Layout.astro';
+import { loadCatalog } from '../../lib/catalog';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, categoryUrl, contentPageUrl } from '../../lib/routing';
+import { brandName } from '../../lib/site';
+import ProductGrid from '../ProductGrid.astro';
+
+type Props = { route: RouteOf<'home'> };
+
+const { route } = Astro.props;
+const { locale } = route;
+const t = translate(locale);
+const catalog = await loadCatalog();
+const [firstCategory] = catalog.topCategories();
+---
+
+<Layout locale={locale} title={brandName} description={t.brand.tagline} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <section class="relative">
+        <Image src={heroPhoto} alt="" widths={[800, 1400, 2000]} sizes="100vw" class="h-[70vh] min-h-[28rem] w-full object-cover" loading="eager" fetchpriority="high" />
+        <div class="absolute inset-0 bg-linear-to-r from-ink/60 to-transparent"></div>
+        <div class="container-page absolute inset-0 flex flex-col justify-center text-cream">
+            <h1 class="max-w-xl text-5xl lg:text-6xl">{t.home.heroTitle}</h1>
+            <p class="mt-4 max-w-md text-lg">{t.home.heroText}</p>
+            <a href={categoryUrl(firstCategory, locale)} class="button-primary mt-8 self-start bg-cream text-ink hover:bg-sand">{t.home.heroCta}</a>
+        </div>
+    </section>
+
+    <section class="container-page mt-20">
+        <h2 class="text-3xl">{t.home.categoriesTitle}</h2>
+        <ul class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {
+                catalog.topCategories().map((category) => (
+                    <li class="group relative overflow-hidden rounded-lg bg-sand">
+                        {category.photo !== null && (
+                            <Image src={category.photo} alt="" widths={[400, 800]} sizes="(min-width: 1024px) 25vw, 50vw" class="aspect-3/4 w-full object-cover transition duration-500 group-hover:scale-105" />
+                        )}
+                        <div class="absolute inset-0 bg-linear-to-t from-ink/60 via-transparent"></div>
+                        <a href={categoryUrl(category, locale)} class="absolute inset-x-0 bottom-0 p-5 font-serif text-2xl text-cream after:absolute after:inset-0">
+                            {category.name[locale]}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+
+    <section class="container-page mt-20">
+        <h2 class="text-3xl">{t.home.featuredTitle}</h2>
+        <div class="mt-8">
+            <ProductGrid products={catalog.featuredProducts()} locale={locale} />
+        </div>
+    </section>
+
+    <section class="container-page mt-20 grid items-center gap-10 lg:grid-cols-2">
+        <Image src={storyPhoto} alt="" widths={[600, 1200]} sizes="(min-width: 1024px) 50vw, 100vw" class="aspect-4/3 w-full rounded-lg object-cover" />
+        <div>
+            <h2 class="text-3xl">{t.home.storyTitle}</h2>
+            <p class="mt-4 leading-relaxed text-muted">{t.home.storyText}</p>
+            <a href={contentPageUrl(catalog.contentPage('about'), locale)} class="button-secondary mt-8">{t.home.storyCta}</a>
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,12 @@
+# Discontinued: the product has no page anymore, so its URL returns a 404. Its photo is never displayed.
+category: floor-lamps
+name: { fr: Lampadaire Pont-Neuf, en: Pont-Neuf floor lamp }
+description:
+  fr: Un lampadaire en métal noir à la tête orientable, inspiré des réverbères parisiens.
+  en: A black metal floor lamp with an adjustable head, inspired by Parisian street lamps.
+priceInCents: 14900
+colors: [black]
+materials: [metal]
+dimensionsInCm: { width: 35, depth: 35, height: 170 }
+photos: [../photos/floor-lamps-2.jpg]
+status: discontinued

@@ -1,0 +1,57 @@
+---
+import { Font } from 'astro:assets';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { type Locale, type Localized, locales, translate } from '../lib/i18n';
+import { brandName } from '../lib/site';
+import '../styles/global.css';
+
+type Props = {
+    locale: Locale;
+    title: string;
+    description: string;
+    /** Null for pages that exist in a single place, like the 404 page. */
+    alternateUrls: Localized | null;
+    indexable: boolean;
+};
+
+const { locale, title, description, alternateUrls, indexable } = Astro.props;
+const t = translate(locale);
+const fullTitle = title === brandName ? title : `${title} | ${brandName}`;
+---
+
+<!doctype html>
+<html lang={locale}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        {!indexable && <meta name="robots" content="noindex" />}
+        {
+            alternateUrls !== null && (
+                <>
+                    <link rel="canonical" href={new URL(alternateUrls[locale], Astro.site)} />
+                    {locales.map((alternateLocale) => (
+                        <link rel="alternate" hreflang={alternateLocale} href={new URL(alternateUrls[alternateLocale], Astro.site)} />
+                    ))}
+                </>
+            )
+        }
+        <meta property="og:site_name" content={brandName} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <Font cssVariable="--font-fraunces" preload />
+        <Font cssVariable="--font-inter" preload />
+        <slot name="head" />
+    </head>
+    <body class="flex min-h-screen flex-col">
+        <p class="bg-ink px-4 py-2 text-center text-xs text-cream">{t.demoBanner}</p>
+        <Header locale={locale} alternateUrls={alternateUrls} />
+        <main class="flex-1">
+            <slot />
+        </main>
+        <Footer locale={locale} />
+    </body>
+</html>

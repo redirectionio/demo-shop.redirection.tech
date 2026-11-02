@@ -1,0 +1,30 @@
+---
+import { type Locale, translate } from '../lib/i18n';
+import { homeUrl } from '../lib/routing';
+
+type Props = {
+    locale: Locale;
+    /** Ancestors of the current page, the current page excluded. */
+    links: { label: string; url: string }[];
+    current: string;
+};
+
+const { locale, links, current } = Astro.props;
+const t = translate(locale);
+---
+
+<nav aria-label={t.breadcrumb.label} class="text-xs text-muted">
+    <ol class="flex flex-wrap items-center gap-2">
+        {
+            [{ label: t.breadcrumb.home, url: homeUrl(locale) }, ...links].map((link) => (
+                <li class="flex items-center gap-2">
+                    <a class="hover:text-ink" href={link.url}>
+                        {link.label}
+                    </a>
+                    <span aria-hidden="true">/</span>
+                </li>
+            ))
+        }
+        <li aria-current="page" class="text-ink">{current}</li>
+    </ol>
+</nav>

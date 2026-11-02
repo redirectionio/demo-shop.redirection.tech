@@ -1,0 +1,11 @@
+category: pendant-lights
+name: { fr: Suspension lanterne Halle, en: Halle lantern pendant }
+description:
+  fr: Une lanterne rectangulaire en verre et métal noir, suspendue à une chaîne. Avec une ampoule à filament, elle donne un air d'atelier à une cuisine ou une entrée.
+  en: A rectangular glass and black metal lantern hung from a chain. Fitted with a filament bulb, it gives a kitchen or a hallway an industrial feel.
+priceInCents: 18900
+colors: [black]
+materials: [glass, metal]
+dimensionsInCm: { width: 22, depth: 22, height: 40 }
+photos: [../photos/pendant-lights-1.jpg]
+featured: true

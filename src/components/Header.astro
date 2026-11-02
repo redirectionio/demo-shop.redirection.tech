@@ -1,0 +1,138 @@
+---
+import { loadCatalog } from '../lib/catalog';
+import { type Locale, type Localized, locales, translate } from '../lib/i18n';
+import { categoryUrl, homeUrl, systemPageUrl } from '../lib/routing';
+import { brandName } from '../lib/site';
+
+type Props = {
+    locale: Locale;
+    alternateUrls: Localized | null;
+};
+
+const { locale, alternateUrls } = Astro.props;
+const t = translate(locale);
+const topCategories = (await loadCatalog()).topCategories();
+---
+
+<header class="sticky top-0 z-30 border-b border-ink/10 bg-cream/95 backdrop-blur">
+    <div class="container-page flex items-center gap-4 py-4 lg:gap-8">
+        <details class="group relative lg:hidden">
+            <summary class="flex cursor-pointer list-none items-center" aria-label={t.header.menu}>
+                <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </summary>
+            <nav class="absolute top-10 left-0 w-72 rounded-lg border border-ink/10 bg-cream p-4 shadow-lg">
+                <ul class="space-y-3">
+                    {
+                        topCategories.map((category) => (
+                            <li>
+                                <a class="font-medium" href={categoryUrl(category, locale)}>
+                                    {category.name[locale]}
+                                </a>
+                                <ul class="mt-1 space-y-1 pl-3 text-sm text-muted">
+                                    {category.children.map((child) => (
+                                        <li>
+                                            <a href={categoryUrl(child, locale)}>{child.name[locale]}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+        </details>
+
+        <a href={homeUrl(locale)} class="font-serif text-2xl tracking-tight whitespace-nowrap">{brandName}</a>
+
+        <form action={systemPageUrl('search', locale)} method="get" role="search" class="hidden flex-1 md:block">
+            <label class="relative block max-w-md">
+                <span class="sr-only">{t.header.search}</span>
+                <input
+                    type="search"
+                    name="q"
+                    placeholder={t.header.searchPlaceholder}
+                    class="input-field rounded-full pl-10"
+                />
+                <svg class="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path stroke-linecap="round" d="m20 20-3.5-3.5"></path>
+                </svg>
+            </label>
+        </form>
+
+        <div class="ml-auto flex items-center gap-5 text-sm">
+            <ul class="flex gap-2" aria-label={t.header.language}>
+                {
+                    locales.map((otherLocale) => (
+                        <li>
+                            {otherLocale === locale ? (
+                                <span class="font-semibold uppercase">{otherLocale}</span>
+                            ) : (
+                                <a
+                                    class="text-muted uppercase hover:text-ink"
+                                    href={alternateUrls?.[otherLocale] ?? homeUrl(otherLocale)}
+                                    hreflang={otherLocale}
+                                    lang={otherLocale}
+                                    title={translate(otherLocale).localeName}
+                                >
+                                    {otherLocale}
+                                </a>
+                            )}
+                        </li>
+                    ))
+                }
+            </ul>
+            <a href={systemPageUrl('cart', locale)} class="relative flex items-center gap-2" aria-label={t.header.cart}>
+                <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linejoin="round" d="M5 8h14l-1 12H6L5 8Z"></path>
+                    <path stroke-linecap="round" d="M9 8V6a3 3 0 0 1 6 0v2"></path>
+                </svg>
+                <span
+                    data-cart-count
+                    hidden
+                    class="absolute -top-1.5 -right-2 min-w-5 rounded-full bg-accent px-1 text-center text-xs leading-5 text-white"
+                ></span>
+            </a>
+        </div>
+    </div>
+
+    <nav class="container-page hidden lg:block">
+        <ul class="flex gap-8 text-sm">
+            {
+                topCategories.map((category) => (
+                    <li class="group relative">
+                        <a class="inline-block border-b-2 border-transparent pb-3 hover:border-ink" href={categoryUrl(category, locale)}>
+                            {category.name[locale]}
+                        </a>
+                        <ul class="invisible absolute top-full left-0 z-40 w-56 rounded-b-lg border border-ink/10 bg-cream p-4 opacity-0 shadow-lg transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                            {category.children.map((child) => (
+                                <li>
+                                    <a class="block py-1.5 text-muted hover:text-ink" href={categoryUrl(child, locale)}>
+                                        {child.name[locale]}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+</header>
+
+<script>
+    import { cartItemCount, onCartChange } from '../scripts/cart';
+
+    function refreshCartCount(): void {
+        const count = cartItemCount();
+        for (const badge of document.querySelectorAll<HTMLElement>('[data-cart-count]')) {
+            badge.textContent = String(count);
+            badge.hidden = count === 0;
+        }
+    }
+
+    refreshCartCount();
+    onCartChange(refreshCartCount);
+</script>

@@ -1,0 +1,11 @@
+category: coffee-tables
+name: { fr: Table basse Fjord, en: Fjord coffee table }
+description:
+  fr: Une table basse ovale en chêne clair, sur quatre pieds fuselés. Ses angles arrondis en font une alliée des salons où l'on circule beaucoup.
+  en: An oval coffee table in light oak, on four tapered legs. Its rounded edges make it a good fit for busy living rooms.
+priceInCents: 39900
+colors: [natural]
+materials: [wood]
+dimensionsInCm: { width: 110, depth: 60, height: 42 }
+photos: [../photos/coffee-tables-1.jpg]
+featured: true

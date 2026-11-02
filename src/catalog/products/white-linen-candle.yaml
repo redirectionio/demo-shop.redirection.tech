@@ -1,0 +1,9 @@
+category: candles
+name: { fr: Bougie parfumée Linge blanc, en: White Linen scented candle }
+description:
+  fr: Une bougie à la cire de soja coulée dans un pot en verre, avec un couvercle doré. Elle brûle environ 40 heures et diffuse un parfum de linge propre et de coton frais.
+  en: A soy wax candle poured into a glass jar, with a gold lid. It burns for about 40 hours with a scent of clean laundry and fresh cotton.
+priceInCents: 2900
+colors: [gold, white]
+materials: [glass, wax]
+photos: [../photos/candles-1.jpg]

@@ -1,0 +1,9 @@
+category: cushions
+name: { fr: Coussins Nuage en lin lavé (lot de 2), en: Nuage washed linen cushions (set of 2) }
+description:
+  fr: Deux coussins en lin lavé, un blanc et un gris perle, doux et légèrement froissés, avec un garnissage en plumes.
+  en: Two washed linen cushions, one white and one pearl grey, soft and slightly crumpled, with a feather filling.
+priceInCents: 5400
+colors: [grey, white]
+materials: [linen]
+photos: [../photos/cushions-2.jpg]

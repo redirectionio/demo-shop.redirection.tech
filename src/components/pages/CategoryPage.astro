@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { loadCatalog } from '../../lib/catalog';
+import { colorIds, colors, materialIds, materials } from '../../lib/facets';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, categoryUrl } from '../../lib/routing';
+import Breadcrumb from '../Breadcrumb.astro';
+import Pagination from '../Pagination.astro';
+import ProductCard from '../ProductCard.astro';
+import ProductGrid from '../ProductGrid.astro';
+
+type Props = { route: RouteOf<'category'> };
+
+const { route } = Astro.props;
+const { locale, category, pageNumber, pageCount, products } = route;
+const t = translate(locale);
+const allProducts = (await loadCatalog()).productsIn(category);
+const availableColors = colorIds().filter((id) => allProducts.some((product) => product.colors.includes(id)));
+const availableMaterials = materialIds().filter((id) => allProducts.some((product) => product.materials.includes(id)));
+const name = category.name[locale];
+const siblings = category.parent === null ? category.children : category.parent.children;
+const sortOptions = Object.entries(t.category.sortOptions);
+---
+
+<Layout
+    locale={locale}
+    title={pageNumber > 1 ? `${name} – ${t.pagination.page(pageNumber)}` : name}
+    description={category.description[locale]}
+    alternateUrls={route.alternateUrls}
+    indexable={route.indexable}
+>
+    {
+        category.photo !== null && (
+            <div class="relative">
+                <Image src={category.photo} alt="" widths={[800, 1400, 2000]} sizes="100vw" class="h-64 w-full object-cover lg:h-80" loading="eager" />
+                <div class="absolute inset-0 bg-ink/30"></div>
+            </div>
+        )
+    }
+
+    <div class="container-page pt-8">
+        <Breadcrumb
+            locale={locale}
+            links={category
+                .lineage()
+                .slice(0, -1)
+                .map((ancestor) => ({ label: ancestor.name[locale], url: categoryUrl(ancestor, locale) }))}
+            current={name}
+        />
+        <h1 class="mt-6 text-4xl">{name}</h1>
+        <p class="mt-3 max-w-2xl text-muted">{category.description[locale]}</p>
+
+        {
+            siblings.length > 0 && (
+                <nav aria-label={t.category.subcategories} class="mt-6">
+                    <ul class="flex flex-wrap gap-2 text-sm">
+                        {siblings.map((sibling) => (
+                            <li>
+                                <a
+                                    href={categoryUrl(sibling, locale)}
+                                    class:list={[
+                                        'inline-block rounded-full border px-4 py-1.5',
+                                        sibling === category ? 'border-ink bg-ink text-cream' : 'border-ink/20 hover:border-ink',
+                                    ]}
+                                >
+                                    {sibling.name[locale]}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            )
+        }
+
+        <form method="get" action={categoryUrl(category, locale)} data-filters class="mt-8 flex flex-wrap items-center gap-3 border-y border-ink/10 py-4 text-sm">
+            <span class="font-medium">{t.category.filters}</span>
+            {
+                [
+                    { name: 'color', legend: t.category.colors, options: availableColors.map((id) => ({ id, label: colors[id].name[locale], hex: colors[id].hex })) },
+                    { name: 'material', legend: t.category.materials, options: availableMaterials.map((id) => ({ id, label: materials[id][locale], hex: null })) },
+                ].map((facet) => (
+                    <details class="relative">
+                        <summary class="cursor-pointer list-none rounded-full border border-ink/20 px-4 py-1.5 hover:border-ink">
+                            {facet.legend} <span data-facet-count={facet.name} class="text-accent"></span>
+                        </summary>
+                        <fieldset class="absolute top-full left-0 z-20 mt-2 w-56 space-y-2 rounded-lg border border-ink/10 bg-cream p-4 shadow-lg">
+                            <legend class="sr-only">{facet.legend}</legend>
+                            {facet.options.map((option) => (
+                                <label class="flex cursor-pointer items-center gap-2">
+                                    <input type="checkbox" name={facet.name} value={option.id} class="accent-ink" />
+                                    {option.hex !== null && <span class="size-4 rounded-full border border-ink/20" style={`background: ${option.hex}`}></span>}
+                                    {option.label}
+                                </label>
+                            ))}
+                            <button class="button-primary mt-2 w-full py-2">{t.category.apply}</button>
+                        </fieldset>
+                    </details>
+                ))
+            }
+            <a href={categoryUrl(category, locale)} data-filters-reset hidden class="text-muted underline hover:text-ink">{t.category.reset}</a>
+            <label class="ml-auto flex items-center gap-2">
+                {t.category.sort}
+                <select name="sort" class="rounded-full border border-ink/20 bg-transparent px-3 py-1.5">
+                    {sortOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+                </select>
+            </label>
+        </form>
+
+        <p data-product-count class="mt-6 text-sm text-muted">{t.category.productCount(allProducts.length)}</p>
+        <ProductGrid products={products} locale={locale} class="mt-6" data-product-grid />
+        <p data-no-result hidden class="py-16 text-center text-muted">{t.category.noResult}</p>
+        <Pagination category={category} locale={locale} pageNumber={pageNumber} pageCount={pageCount} />
+
+        <!-- Every product of the category, used by the client-side filters. -->
+        <template data-all-products>
+            {allProducts.map((product, position) => <ProductCard product={product} locale={locale} position={position} />)}
+        </template>
+    </div>
+</Layout>
+
+<script>
+    import { type Locale, translate } from '../../lib/i18n';
+
+    // Filters and sort are query string parameters, applied in the browser: the site is static.
+    const form = document.querySelector<HTMLFormElement>('[data-filters]')!;
+    const params = new URLSearchParams(window.location.search);
+    const selected = { color: params.getAll('color'), material: params.getAll('material') };
+    const sortSelect = form.querySelector<HTMLSelectElement>('select[name="sort"]')!;
+    const sortValues = [...sortSelect.options].map((option) => option.value);
+    const sort = sortValues.includes(params.get('sort') ?? '') ? params.get('sort')! : 'featured';
+
+    for (const input of form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')) {
+        input.checked = params.getAll(input.name).includes(input.value);
+    }
+    sortSelect.value = sort;
+    for (const [facet, values] of Object.entries(selected)) {
+        form.querySelector(`[data-facet-count="${facet}"]`)!.textContent = values.length > 0 ? `(${values.length})` : '';
+    }
+
+    sortSelect.addEventListener('change', () => form.requestSubmit());
+    form.addEventListener('formdata', (event) => {
+        if (event.formData.get('sort') === 'featured') {
+            event.formData.delete('sort');
+        }
+    });
+
+    if (selected.color.length > 0 || selected.material.length > 0 || sort !== 'featured') {
+        applyFilters();
+    }
+
+    function applyFilters(): void {
+        const template = document.querySelector<HTMLTemplateElement>('[data-all-products]')!;
+        const matchesFacet = (cardValues: string, selectedValues: string[]) =>
+            selectedValues.length === 0 || cardValues.split(' ').some((value) => selectedValues.includes(value));
+        const cards = [...template.content.querySelectorAll<HTMLElement>('[data-product-card]')].filter(
+            (card) => matchesFacet(card.dataset.colors!, selected.color) && matchesFacet(card.dataset.materials!, selected.material),
+        );
+
+        const position = (card: HTMLElement) => Number(card.dataset.position);
+        const price = (card: HTMLElement) => Number(card.dataset.price);
+        const comparators: Record<string, (a: HTMLElement, b: HTMLElement) => number> = {
+            featured: (a, b) => position(a) - position(b),
+            'price-asc': (a, b) => price(a) - price(b) || position(a) - position(b),
+            'price-desc': (a, b) => price(b) - price(a) || position(a) - position(b),
+            name: (a, b) => a.dataset.name!.localeCompare(b.dataset.name!, document.documentElement.lang),
+        };
+        cards.sort(comparators[sort]);
+
+        const t = translate(document.documentElement.lang as Locale);
+        document.querySelector('[data-product-grid]')!.replaceChildren(...cards.map((card) => card.cloneNode(true)));
+        document.querySelector('[data-product-count]')!.textContent = t.category.productCount(cards.length);
+        document.querySelector<HTMLElement>('[data-no-result]')!.hidden = cards.length > 0;
+        document.querySelector<HTMLElement>('[data-filters-reset]')!.hidden = false;
+        // Filtered results are displayed on a single page.
+        document.querySelector<HTMLElement>('[data-pagination]')?.remove();
+    }
+</script>

@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+    --color-cream: #faf7f2;
+    --color-sand: #efe8dc;
+    --color-ink: #2b2723;
+    --color-muted: #6f675e;
+    --color-accent: #9c5b3c;
+    --color-accent-dark: #7d462c;
+}
+
+@layer base {
+    body {
+        @apply bg-cream font-sans text-ink antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-serif font-normal tracking-tight;
+    }
+}
+
+@utility container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility button-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-cream transition hover:bg-accent-dark disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+@utility button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink px-6 py-3 text-sm font-medium transition hover:bg-ink hover:text-cream;
+}
+
+@utility input-field {
+    @apply w-full rounded-lg border border-ink/20 bg-white px-4 py-2.5 text-sm outline-none focus:border-ink;
+}
+
+/* Rendered Markdown of the content pages. */
+@utility prose-page {
+    @apply max-w-3xl text-base leading-relaxed text-ink;
+
+    & h2 {
+        @apply mt-10 mb-4 text-2xl;
+    }
+
+    & p,
+    & ul {
+        @apply mb-4;
+    }
+
+    & ul {
+        @apply list-disc pl-6;
+    }
+
+    & a {
+        @apply text-accent underline;
+    }
+}

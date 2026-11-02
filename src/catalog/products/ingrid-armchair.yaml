@@ -1,0 +1,11 @@
+category: armchairs
+name: { fr: Fauteuil Ingrid, en: Ingrid armchair }
+description:
+  fr: Un fauteuil à haut dossier d'inspiration années 60, tapissé d'un jacquard moutarde et crème et posé sur des pieds compas en bois. Le fauteuil de lecture par excellence.
+  en: A 1960s-inspired high-back armchair, upholstered in a mustard and cream jacquard and set on splayed wooden legs. The ultimate reading chair.
+priceInCents: 64900
+colors: [white, yellow]
+materials: [cotton, wood]
+dimensionsInCm: { width: 76, depth: 82, height: 102 }
+photos: [../photos/armchairs-1.jpg]
+featured: true

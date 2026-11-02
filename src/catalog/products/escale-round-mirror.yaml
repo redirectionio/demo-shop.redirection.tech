@@ -1,0 +1,11 @@
+category: mirrors
+name: { fr: Miroir rond Escale, en: Escale round mirror }
+description:
+  fr: Un miroir rond au fin cadre en métal noir, suspendu à une sangle en corde. Il agrandit une entrée ou habille un mur au-dessus d'une banquette.
+  en: A round mirror with a slim black metal frame, hung from a rope strap. It opens up a hallway or dresses a wall above a daybed.
+priceInCents: 8900
+colors: [black]
+materials: [glass, metal]
+dimensionsInCm: { width: 50, depth: 3, height: 50 }
+photos: [../photos/mirrors-1.jpg]
+featured: true

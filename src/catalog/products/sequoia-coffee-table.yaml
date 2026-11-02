@@ -1,0 +1,10 @@
+category: coffee-tables
+name: { fr: Table basse Sequoia, en: Sequoia coffee table }
+description:
+  fr: Un plateau en bois massif aux bords bruts, qui garde la forme naturelle du tronc, sur des pieds épingle en métal noir. Chaque pièce est unique.
+  en: A solid wood slab top with a live edge that keeps the natural shape of the trunk, on black metal hairpin legs. Every piece is unique.
+priceInCents: 54900
+colors: [black, natural]
+materials: [metal, wood]
+dimensionsInCm: { width: 120, depth: 60, height: 40 }
+photos: [../photos/coffee-tables-4.jpg]

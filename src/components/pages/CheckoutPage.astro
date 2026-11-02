@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { translate } from '../../lib/i18n';
+import { type RouteOf, systemPageUrl } from '../../lib/routing';
+import ProductCatalogData from '../ProductCatalogData.astro';
+
+type Props = { route: RouteOf<'system-page'> };
+
+const { route } = Astro.props;
+const { locale } = route;
+const t = translate(locale);
+const fields = [
+    { name: 'email', label: t.checkout.email, type: 'email', autocomplete: 'email', wide: true },
+    { name: 'first-name', label: t.checkout.firstName, type: 'text', autocomplete: 'given-name', wide: false },
+    { name: 'last-name', label: t.checkout.lastName, type: 'text', autocomplete: 'family-name', wide: false },
+    { name: 'address', label: t.checkout.address, type: 'text', autocomplete: 'street-address', wide: true },
+    { name: 'postal-code', label: t.checkout.postalCode, type: 'text', autocomplete: 'postal-code', wide: false },
+    { name: 'city', label: t.checkout.city, type: 'text', autocomplete: 'address-level2', wide: false },
+] as const;
+---
+
+<Layout locale={locale} title={t.checkout.title} description={t.checkout.title} alternateUrls={route.alternateUrls} indexable={route.indexable}>
+    <div class="container-page pt-12">
+        <h1 class="text-4xl">{t.checkout.title}</h1>
+
+        <form data-checkout data-cart-url={systemPageUrl('cart', locale)} data-confirmation-url={systemPageUrl('order-confirmation', locale)} class="mt-8 grid gap-12 lg:grid-cols-3">
+            <div class="space-y-10 lg:col-span-2">
+                <fieldset>
+                    <legend class="font-serif text-2xl">{t.checkout.contact}</legend>
+                    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                        {
+                            fields.map((field) => (
+                                <label class:list={['text-sm', field.wide && 'sm:col-span-2']}>
+                                    {field.label}
+                                    <input name={field.name} type={field.type} autocomplete={field.autocomplete} required class="input-field mt-1" />
+                                </label>
+                            ))
+                        }
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend class="font-serif text-2xl">{t.checkout.payment}</legend>
+                    <p class="mt-4 rounded-lg border border-accent/30 bg-accent/5 p-4 text-sm">{t.checkout.paymentNotice}</p>
+                </fieldset>
+            </div>
+
+            <aside class="h-fit rounded-lg bg-sand p-6 text-sm">
+                <h2 class="font-serif text-2xl">{t.checkout.summary}</h2>
+                <ul data-checkout-lines class="mt-4 space-y-2"></ul>
+                <dl class="mt-4 space-y-3 border-t border-ink/10 pt-4">
+                    <div class="flex justify-between"><dt>{t.cart.subtotal}</dt><dd data-cart-subtotal></dd></div>
+                    <div class="flex justify-between"><dt>{t.cart.shipping}</dt><dd data-cart-shipping></dd></div>
+                    <div class="flex justify-between border-t border-ink/10 pt-3 text-base font-semibold"><dt>{t.cart.total}</dt><dd data-cart-total></dd></div>
+                </dl>
+                <button class="button-primary mt-6 w-full">{t.checkout.submit}</button>
+            </aside>
+        </form>
+    </div>
+    <ProductCatalogData locale={locale} />
+</Layout>
+
+<script>
+    import { emptyCart } from '../../scripts/cart';
+    import { summarizeCart } from '../../scripts/cart-summary';
+    import { type Locale, formatPrice, translate } from '../../lib/i18n';
+    import { readProductCatalog } from '../../scripts/product-catalog';
+
+    const locale = document.documentElement.lang as Locale;
+    const t = translate(locale);
+    const form = document.querySelector<HTMLFormElement>('[data-checkout]')!;
+    const summary = summarizeCart(readProductCatalog());
+
+    if (summary.lines.length === 0) {
+        window.location.replace(form.dataset.cartUrl!);
+    }
+
+    document.querySelector('[data-checkout-lines]')!.replaceChildren(
+        ...summary.lines.map(({ product, quantity, totalInCents }) => {
+            const line = document.createElement('li');
+            line.className = 'flex justify-between gap-4';
+            line.append(`${quantity} × ${product.name}`);
+            const total = document.createElement('span');
+            total.textContent = formatPrice(totalInCents, locale);
+            line.append(total);
+
+            return line;
+        }),
+    );
+    document.querySelector('[data-cart-subtotal]')!.textContent = formatPrice(summary.subtotalInCents, locale);
+    document.querySelector('[data-cart-shipping]')!.textContent =
+        summary.shippingInCents === 0 ? t.cart.shippingFree : formatPrice(summary.shippingInCents, locale);
+    document.querySelector('[data-cart-total]')!.textContent = formatPrice(summary.totalInCents, locale);
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        emptyCart();
+        const orderNumber = String(Math.floor(100000 + Math.random() * 900000));
+        window.location.assign(`${form.dataset.confirmationUrl}?order=${orderNumber}`);
+    });
+</script>

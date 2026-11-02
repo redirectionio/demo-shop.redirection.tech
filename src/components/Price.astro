@@ -1,0 +1,17 @@
+---
+import type { Product } from '../lib/catalog';
+import { type Locale, formatPrice } from '../lib/i18n';
+
+type Props = {
+    product: Product;
+    locale: Locale;
+    class?: string;
+};
+
+const { product, locale, class: className } = Astro.props;
+---
+
+<p class:list={['flex items-baseline gap-2', className]}>
+    <span class:list={[product.isOnSale() && 'text-accent']}>{formatPrice(product.priceInCents, locale)}</span>
+    {product.previousPriceInCents !== null && <s class="text-sm text-muted">{formatPrice(product.previousPriceInCents, locale)}</s>}
+</p>

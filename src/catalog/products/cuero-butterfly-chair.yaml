@@ -1,0 +1,11 @@
+category: armchairs
+name: { fr: Fauteuil papillon Cuero, en: Cuero butterfly chair }
+description:
+  fr: Le fauteuil papillon, avec une assise en cuir cognac aux bords surpiqués tendue sur une structure en métal fin. Léger, il se déplace d'une pièce à l'autre.
+  en: The butterfly chair, with a cognac leather sling with whipstitched edges stretched over a slim metal frame. Lightweight, it moves easily from room to room.
+priceInCents: 34900
+previousPriceInCents: 42900
+colors: [brown]
+materials: [leather, metal]
+dimensionsInCm: { width: 80, depth: 76, height: 90 }
+photos: [../photos/armchairs-3.jpg]

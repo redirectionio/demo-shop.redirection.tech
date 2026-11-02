@@ -1,0 +1,10 @@
+category: throws
+name: { fr: Plaid patchwork Highlands, en: Highlands patchwork throw }
+description:
+  fr: Un plaid en laine qui assemble des carrés de tartan, de pied-de-poule et de tweed rose. Cousu à partir de chutes de tissus, chaque plaid est unique.
+  en: A wool throw stitched together from tartan, houndstooth and pink tweed squares. Each one is made from fabric offcuts, so no two are alike.
+priceInCents: 8900
+colors: [green, pink, red]
+materials: [wool]
+photos: [../photos/throws-1.jpg]
+featured: true

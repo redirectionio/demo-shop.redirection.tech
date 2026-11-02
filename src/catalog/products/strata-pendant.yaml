@@ -1,0 +1,10 @@
+category: pendant-lights
+name: { fr: Suspension Strates, en: Strata pendant light }
+description:
+  fr: Des anneaux superposés en métal laqué blanc, qui guident la lumière vers le bas sans éblouir. Une suspension douce pour un salon ou une chambre.
+  en: Stacked rings in white lacquered metal that direct the light downwards without glare. A gentle pendant light for a living room or a bedroom.
+priceInCents: 22900
+colors: [white]
+materials: [metal]
+dimensionsInCm: { width: 45, depth: 45, height: 30 }
+photos: [../photos/pendant-lights-3.jpg]

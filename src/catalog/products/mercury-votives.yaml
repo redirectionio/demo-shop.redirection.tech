@@ -1,0 +1,9 @@
+category: candles
+name: { fr: Photophores Mercure (lot de 4), en: Mercury glass votives (set of 4) }
+description:
+  fr: Des photophores en verre mercurisé, mouchetés d'argent et d'or, pour bougies chauffe-plat. Alignés sur une table, ils multiplient les reflets.
+  en: Mercury glass tealight holders, speckled with silver and gold. Lined up on a table, they fill it with reflections.
+priceInCents: 2200
+colors: [gold, grey]
+materials: [glass]
+photos: [../photos/candles-3.jpg]

@@ -1,0 +1,10 @@
+category: sofas
+name: { fr: Canapé 2 places Brighton, en: Brighton loveseat }
+description:
+  fr: Un deux places compact en tissu bleu canard, sur de fins pieds fuselés en bois. Idéal pour un petit salon ou un coin lecture près de la fenêtre.
+  en: A compact two-seater in duck-egg blue fabric, on slim tapered wooden legs. Ideal for a small living room or a reading corner by the window.
+priceInCents: 89000
+colors: [blue]
+materials: [cotton, wood]
+dimensionsInCm: { width: 158, depth: 84, height: 82 }
+photos: [../photos/sofas-3.jpg]

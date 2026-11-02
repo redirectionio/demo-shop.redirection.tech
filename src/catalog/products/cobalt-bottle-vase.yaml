@@ -1,0 +1,9 @@
+category: vases
+name: { fr: Vase bouteille Cobalt, en: Cobalt bottle vase }
+description:
+  fr: Une bouteille en verre soufflé bleu cobalt, à poser sur un rebord de fenêtre pour profiter des reflets. Une seule fleur suffit.
+  en: A cobalt blue blown glass bottle, made for a windowsill where it catches the light. A single flower is all it needs.
+priceInCents: 1900
+colors: [blue]
+materials: [glass]
+photos: [../photos/vases-3.jpg]

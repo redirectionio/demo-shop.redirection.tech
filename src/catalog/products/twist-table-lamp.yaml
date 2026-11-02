@@ -1,0 +1,11 @@
+category: table-lamps
+name: { fr: Lampe Torsade, en: Twist table lamp }
+description:
+  fr: Un pied en fer forgé noir torsadé en double hélice et un abat-jour cloche en lin crème à nervures. Une lampe de caractère pour un bureau ou une bibliothèque.
+  en: A black wrought iron base twisted into a double helix, with a ribbed cream linen bell shade. A lamp with character for a study or a library.
+priceInCents: 9900
+previousPriceInCents: 12900
+colors: [beige, black]
+materials: [linen, metal]
+dimensionsInCm: { width: 30, depth: 30, height: 56 }
+photos: [../photos/table-lamps-4.jpg]

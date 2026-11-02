@@ -1,0 +1,11 @@
+category: pendant-lights
+name: { fr: Suspension Étoile, en: Star pendant light }
+description:
+  fr: Une étoile à multiples branches en verre dépoli serti de métal noir. Allumée, elle projette des reflets graphiques sur les murs.
+  en: A many-pointed star of frosted glass set in black metal. When lit, it casts graphic patterns on the walls.
+priceInCents: 14900
+previousPriceInCents: 17900
+colors: [black, white]
+materials: [glass, metal]
+dimensionsInCm: { width: 40, depth: 40, height: 40 }
+photos: [../photos/pendant-lights-4.jpg]

@@ -1,0 +1,48 @@
+---
+import type { Category } from '../lib/catalog';
+import { type Locale, translate } from '../lib/i18n';
+import { categoryUrl } from '../lib/routing';
+
+type Props = {
+    category: Category;
+    locale: Locale;
+    pageNumber: number;
+    pageCount: number;
+};
+
+const { category, locale, pageNumber, pageCount } = Astro.props;
+const t = translate(locale);
+const pageNumbers = Array.from({ length: pageCount }, (_, index) => index + 1);
+---
+
+{
+    pageCount > 1 && (
+        <nav aria-label={t.pagination.label} class="mt-12 flex items-center justify-center gap-2 text-sm" data-pagination>
+            {pageNumber > 1 && (
+                <a class="rounded-full px-4 py-2 hover:bg-sand" rel="prev" href={categoryUrl(category, locale, pageNumber - 1)}>
+                    {t.pagination.previous}
+                </a>
+            )}
+            {pageNumbers.map((number) =>
+                number === pageNumber ? (
+                    <span aria-current="page" class="flex size-10 items-center justify-center rounded-full bg-ink text-cream">
+                        {number}
+                    </span>
+                ) : (
+                    <a
+                        class="flex size-10 items-center justify-center rounded-full hover:bg-sand"
+                        aria-label={t.pagination.page(number)}
+                        href={categoryUrl(category, locale, number)}
+                    >
+                        {number}
+                    </a>
+                ),
+            )}
+            {pageNumber < pageCount && (
+                <a class="rounded-full px-4 py-2 hover:bg-sand" rel="next" href={categoryUrl(category, locale, pageNumber + 1)}>
+                    {t.pagination.next}
+                </a>
+            )}
+        </nav>
+    )
+}

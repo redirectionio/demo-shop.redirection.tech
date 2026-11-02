@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import type { Product } from '../lib/catalog';
+import { type Locale, translate } from '../lib/i18n';
+import { productUrl } from '../lib/routing';
+import Price from './Price.astro';
+
+type Props = {
+    product: Product;
+    locale: Locale;
+    /** Position in the default ("featured") order, used to restore it after a client-side sort. */
+    position?: number;
+};
+
+const { product, locale, position = 0 } = Astro.props;
+const t = translate(locale);
+---
+
+<article
+    class="group relative"
+    data-product-card
+    data-colors={product.colors.join(' ')}
+    data-materials={product.materials.join(' ')}
+    data-name={product.name[locale]}
+    data-position={position}
+    data-price={product.priceInCents}
+>
+    <div class="relative aspect-4/5 overflow-hidden rounded-lg bg-sand">
+        <Image
+            src={product.photos[0]}
+            alt={product.name[locale]}
+            widths={[320, 480, 720]}
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            class="size-full object-cover transition duration-500 group-hover:scale-105"
+        />
+        {product.isOnSale() && <span class="absolute top-3 left-3 rounded-full bg-accent px-3 py-1 text-xs text-white">{t.product.sale}</span>}
+        {!product.isPurchasable() && <span class="absolute top-3 left-3 rounded-full bg-ink/80 px-3 py-1 text-xs text-white">{t.product.outOfStock}</span>}
+    </div>
+    <h3 class="mt-3 font-sans text-sm">
+        <a href={productUrl(product, locale)} class="after:absolute after:inset-0">{product.name[locale]}</a>
+    </h3>
+    <Price product={product} locale={locale} class="mt-1 text-sm font-medium" />
+</article>

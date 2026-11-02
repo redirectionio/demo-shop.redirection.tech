@@ -1,0 +1,9 @@
+category: candles
+name: { fr: Bougeoir rat de cave, en: Brass chamberstick }
+description:
+  fr: Un bougeoir rat de cave en laiton, avec sa coupelle et son anse, pour une bougie fine. Le bougeoir d'autrefois, qui se patine joliment avec le temps.
+  en: A brass chamberstick with a drip saucer and a handle, for a taper candle. The old-fashioned candle holder, which develops a lovely patina over time.
+priceInCents: 3400
+colors: [gold]
+materials: [brass]
+photos: [../photos/candles-4.jpg]

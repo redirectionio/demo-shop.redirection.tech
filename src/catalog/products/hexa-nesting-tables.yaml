@@ -1,0 +1,11 @@
+category: coffee-tables
+name: { fr: Tables gigognes Hexa, en: Hexa nesting tables }
+description:
+  fr: Deux tables gigognes en bois massif clair, aux plateaux hexagonaux et aux pieds évasés. Rangées l'une sous l'autre ou côte à côte, selon les besoins.
+  en: Two nesting tables in light solid wood, with hexagonal tops and splayed legs. Tuck one under the other or set them side by side, as needed.
+priceInCents: 24900
+previousPriceInCents: 29900
+colors: [natural]
+materials: [wood]
+dimensionsInCm: { width: 60, depth: 52, height: 45 }
+photos: [../photos/coffee-tables-3.jpg]

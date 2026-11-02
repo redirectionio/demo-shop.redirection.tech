@@ -1,0 +1,114 @@
+# Categories are displayed in this order, and a parent must be declared before its children.
+# URLs are built from the names: renaming a category changes its URL and the URLs of its products.
+
+- id: living-room
+  name: { fr: Salon, en: Living room }
+  description:
+    fr: Canapés, fauteuils et tables basses pour une pièce à vivre chaleureuse.
+    en: Sofas, armchairs and coffee tables for a warm and welcoming living space.
+  photo: ./photos/category-living-room.jpg
+
+- id: sofas
+  parent: living-room
+  name: { fr: Canapés, en: Sofas }
+  description:
+    fr: Des canapés confortables en tissu ou en cuir, du petit deux places au grand trois places.
+    en: Comfortable sofas in fabric or leather, from cosy loveseats to roomy three-seaters.
+
+- id: armchairs
+  parent: living-room
+  name: { fr: Fauteuils, en: Armchairs }
+  description:
+    fr: Fauteuils de lecture, fauteuils de style et assises d'appoint.
+    en: Reading chairs, period armchairs and accent seats.
+
+- id: coffee-tables
+  parent: living-room
+  name: { fr: Tables basses, en: Coffee tables }
+  description:
+    fr: Tables basses en bois massif, laquées ou sur piètement en métal.
+    en: Coffee tables in solid wood, lacquered or on metal legs.
+
+- id: lighting
+  name: { fr: Luminaires, en: Lighting }
+  description:
+    fr: Lampes, suspensions et lampadaires pour une lumière douce à toute heure.
+    en: Lamps, pendants and floor lamps for a soft light at any time of day.
+  photo: ./photos/category-lighting.jpg
+
+- id: table-lamps
+  parent: lighting
+  name: { fr: Lampes à poser, en: Table lamps }
+  description:
+    fr: Lampes de chevet et lampes de bureau en laiton ou en fer forgé.
+    en: Bedside and desk lamps in brass or wrought iron.
+
+- id: pendant-lights
+  parent: lighting
+  name: { fr: Suspensions, en: Pendant lights }
+  description:
+    fr: Suspensions en verre ou en métal pour habiller vos plafonds.
+    en: Glass or metal pendant lights to dress up your ceilings.
+
+- id: floor-lamps
+  parent: lighting
+  name: { fr: Lampadaires, en: Floor lamps }
+  description:
+    fr: Lampadaires et liseuses pour éclairer un coin lecture ou tout un salon.
+    en: Floor and reading lamps to light up a reading nook or a whole living room.
+
+- id: decor
+  name: { fr: Décoration, en: Decor }
+  description:
+    fr: Vases, miroirs et bougies, les petites touches qui font la différence.
+    en: Vases, mirrors and candles, the little touches that make the difference.
+  photo: ./photos/category-decor.jpg
+
+- id: vases
+  parent: decor
+  name: { fr: Vases, en: Vases }
+  description:
+    fr: Vases en grès, en verre soufflé ou en céramique, pour fleurs fraîches ou séchées.
+    en: Stoneware, blown glass or ceramic vases, for fresh or dried flowers.
+
+- id: mirrors
+  parent: decor
+  name: { fr: Miroirs, en: Mirrors }
+  description:
+    fr: Miroirs ronds, baroques ou soleil pour agrandir l'espace.
+    en: Round, baroque and sunburst mirrors to make any room feel bigger.
+
+- id: candles
+  parent: decor
+  name: { fr: Bougies & senteurs, en: Candles & scents }
+  description:
+    fr: Bougies parfumées, photophores et bougeoirs pour des soirées tout en douceur.
+    en: Scented candles, tealight holders and candlesticks for cosy evenings.
+
+- id: textiles
+  name: { fr: Textile, en: Textiles }
+  description:
+    fr: Coussins, plaids et tapis pour une maison tout en douceur.
+    en: Cushions, throws and rugs for a softer home.
+  photo: ./photos/category-textiles.jpg
+
+- id: cushions
+  parent: textiles
+  name: { fr: Coussins, en: Cushions }
+  description:
+    fr: Coussins en lin lavé, en velours ou en coton, à mélanger sans modération.
+    en: Washed linen, velvet or cotton cushions, to mix and match freely.
+
+- id: throws
+  parent: textiles
+  name: { fr: Plaids, en: Throws }
+  description:
+    fr: Plaids en laine, en coton ou en fausse fourrure pour les soirées fraîches.
+    en: Wool, cotton or faux fur throws for chilly evenings.
+
+- id: rugs
+  parent: textiles
+  name: { fr: Tapis, en: Rugs }
+  description:
+    fr: Tapis tissés en laine ou en coton.
+    en: Woven rugs in wool or cotton.

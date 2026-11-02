@@ -1,0 +1,10 @@
+category: table-lamps
+name: { fr: Lampe à poser Céleste, en: Céleste table lamp }
+description:
+  fr: Un pied colonne en laiton surmonté d'un abat-jour conique blanc à motif chevrons. Elle diffuse une lumière douce sur un guéridon ou une table de chevet.
+  en: A brass column base topped with a white tapered shade with a herringbone pattern. It casts a soft light on a side table or a nightstand.
+priceInCents: 15900
+colors: [gold, white]
+materials: [brass, cotton]
+dimensionsInCm: { width: 28, depth: 28, height: 58 }
+photos: [../photos/table-lamps-2.jpg]
