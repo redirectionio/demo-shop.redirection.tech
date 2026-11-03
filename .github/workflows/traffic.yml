@@ -1,17 +1,20 @@
 name: Traffic
 
 on:
+    # Each run starts the next one, as GitHub drops most scheduled runs. The schedule only restarts the chain after a
+    # failed run. Minute 7 avoids the rush of the jobs scheduled on the hour.
     schedule:
-        # Each run simulates 55 minutes of traffic. Minute 7 avoids the rush of the jobs scheduled on the hour, which
-        # GitHub delays.
         - cron: '7 * * * *'
     workflow_dispatch:
 
 permissions:
+    # Starts the next run.
+    actions: write
     # Pushes the traffic-state branch.
     contents: write
 
-# Runs one at a time: a late run waits for the previous one.
+# Runs one at a time: the next run waits for the current one. GitHub keeps a single waiting run, so it cancels a
+# scheduled run that was waiting too.
 concurrency:
     group: ${{ github.workflow }}
 
@@ -32,3 +35,7 @@ jobs:
                   tools: castor
             - run: castor traffic:memorize
             - run: castor traffic:simulate --duration=55
+            # Skipped after a failure, so that a broken run does not start again and again.
+            - run: gh workflow run traffic.yml
+              env:
+                  GH_TOKEN: ${{ github.token }}

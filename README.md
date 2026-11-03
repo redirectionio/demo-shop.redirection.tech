@@ -50,4 +50,5 @@ redirection.io, with traffic, until a redirection fixes it. `traffic:memorize` r
 ever listed, with the day it left it, on the `traffic-state` branch: an orphan branch holding a single commit,
 replaced on each change. `traffic/legacy-urls.txt` adds the URLs of the previous version of the shop, a PrestaShop.
 
-The `Traffic` workflow runs both tasks every hour.
+The `Traffic` workflow runs both tasks, then starts again. GitHub drops most scheduled runs: the hourly schedule only
+restarts it after a failed run.
